@@ -1,2 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 //@import "~bootstrap/dist/css/bootstrap.min.css";
+
+.colore-background {
+  background-color: #fce4d6;
+}
+
+@media print {
+  .head-print {
+    background-color: #fce4d6;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .colore-background {
+    background-color: #fce4d6;
+    -webkit-print-color-adjust: exact;
+  }
+}

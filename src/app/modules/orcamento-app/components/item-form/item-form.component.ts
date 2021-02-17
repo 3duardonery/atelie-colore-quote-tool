@@ -19,7 +19,8 @@ export class ItemFormComponent implements OnInit {
     quantity: 0,
     state: '', 
     totalValue: 0,
-    unitValue: 0
+    unitValue: 0,
+    height: ''
   }
 
   constructor() { }
@@ -28,9 +29,8 @@ export class ItemFormComponent implements OnInit {
   }
 
   addNewItem(): void {
-    //let newItem: Item = {...this.item};
+    this.calculate();
     this.addItem.emit({...this.item});
-    //newItem = null;
   }
 
   cancel(hide: boolean): void {

@@ -4,46 +4,48 @@
     <div class="form-row">
         <div class="col-md-4 mb-3">
             <label>Nome do cliente</label>
-            <input type="text" class="form-control" formControlName="customerName" placeholder="Nome do cliente"
-                required>
+            <input type="text" class="form-control" formControlName="customerName" placeholder="Nome do cliente">
         </div>
         <div class="col-md-4 mb-3">
             <label>CPF</label>
-            <input type="text" class="form-control" formControlName="cpf" placeholder="CPF do cliente" required>
+            <input type="text" class="form-control" formControlName="cpf" placeholder="CPF do cliente">
         </div>
         <div class="col-md-4 mb-3">
             <label>Contato</label>
-            <input type="text" class="form-control" formControlName="phone" placeholder="Telefone" required>
+            <input type="text" class="form-control" formControlName="phone" placeholder="Telefone">
         </div>
     </div>
     <h4 class="mb-2 mt-2">Dados de Entrega</h4>
     <div class="form-row">
         <div class="col-md-4 mb-3">
             <label>Endereço</label>
-            <input type="text" class="form-control" formControlName="address" placeholder="Endereço" required>
+            <input type="text" class="form-control" formControlName="address" placeholder="Endereço">
         </div>
         <div class="col-md-2 mb-3">
             <label>Número</label>
-            <input type="text" class="form-control" formControlName="number" placeholder="Número" required>
+            <input type="text" class="form-control" formControlName="number" placeholder="Número">
         </div>
         <div class="col-md-3 mb-3">
             <label>Complemento</label>
-            <input type="text" class="form-control" formControlName="complement" placeholder="Complemento" required>
+            <input type="text" class="form-control" formControlName="complement" placeholder="Complemento">
         </div>
         <div class="col-md-3 mb-3">
             <label>Bairro</label>
-            <input type="text" class="form-control" formControlName="neighborhood" placeholder="Telefone" required>
+            <input type="text" class="form-control" formControlName="neighborhood" placeholder="Bairro">
         </div>
 
     </div>
     <div class="form-row">
         <div class="col-md-3 mb-3">
             <label>Cidade</label>
-            <input type="text" class="form-control" formControlName="city" placeholder="Telefone" required>
+            <input type="text" class="form-control" formControlName="city" placeholder="Cidade">
         </div>
-        <div class="col-md-3 mb-3">
+        <div class="form-group col-md-3">
             <label>Estado</label>
-            <input type="text" class="form-control" formControlName="state" placeholder="Telefone" required>
+            <select class="form-control" formControlName="state">
+                <option>Selecione uma opção</option>
+                <option>CE</option>
+            </select>
         </div>
     </div>
 
@@ -79,6 +81,10 @@
                 <option>Letícia</option>
                 <option>Nayane</option>
             </select>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label>Frete</label>
+            <input type="text" class="form-control" formControlName="freight" placeholder="Valor do Frete" required>
         </div>
     </div>
     <div class="row d-flex flex-row justify-content-between p-2">

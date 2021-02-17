@@ -5,5 +5,4 @@ export interface Order {
     theme: string;
     printAge: string;
     owner: string;
-    height: string;
 }

@@ -5,4 +5,5 @@ export interface Item {
     paper: string;
     unitValue: number;
     totalValue: number;
+    height: string;
 }

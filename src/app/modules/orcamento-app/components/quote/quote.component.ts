@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Address } from 'src/app/models/address';
 import { Customer } from 'src/app/models/customer';
 import { Item } from 'src/app/models/item';
 import { Order } from 'src/app/models/order';
 
 import { Quote } from 'src/app/models/quote';
+import { QuoteService } from '../../services/quote.service';
 
 @Component({
   selector: 'app-quote',
@@ -34,8 +36,7 @@ export class QuoteComponent implements OnInit {
     printAge: '',
     printName: '',
     requestAt: '',
-    theme: '',
-    height: ''
+    theme: ''
   };
   item: Item = {
     description: '',
@@ -43,7 +44,8 @@ export class QuoteComponent implements OnInit {
     quantity: 0,
     state: '',
     totalValue: 0,
-    unitValue: 0
+    unitValue: 0,
+    height: ''
   };
   items: Array<Item> = [];
   quote: Quote = {
@@ -53,11 +55,16 @@ export class QuoteComponent implements OnInit {
     order: this.order,
     quantity: 0,
     value: 0,
-    id: ''
+    id: '',
+    freight: 0
   };
   quoteFormGroup: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  @Input() quoteId: string;
+
+  constructor(private _formBuilder: FormBuilder, 
+    private _router: Router, 
+    private _quoteService: QuoteService) { }
 
   ngOnInit(): void {    
     this.quoteFormGroup = this._formBuilder
@@ -76,7 +83,8 @@ export class QuoteComponent implements OnInit {
         deliveryAt: new FormControl(this.order.deliveryUntil),
         theme: new FormControl(this.order.theme),
         printAge: new FormControl(this.order.printAge),
-        seller: new FormControl(this.order.owner),        
+        seller: new FormControl(this.order.owner), 
+        freight: new FormControl(this.quote.freight)       
       });
   }
 
@@ -85,7 +93,47 @@ export class QuoteComponent implements OnInit {
   }
 
   printQuote(value: FormData): void {
-    console.log(value);    
+    this.address.street = value['address'];
+    this.address.number = value['number'];
+    this.address.neighborhood = value['neighborhood'];
+    this.address.complement = value['complement'];
+    this.address.city = value['city'];
+    this.address.state = value['state'];
+
+    this.order.deliveryUntil = value['deliveryAt'];
+    this.order.owner = value['seller'];
+    this.order.printAge = value['printAge'];
+    this.order.printName = value['printName'];
+    this.order.requestAt = value['requestAt'];
+    this.order.theme = value['theme'];
+
+    this.customer.cpf = value['cpf'];
+    this.customer.name = value['customerName'];
+    this.customer.phone = value['phone'];
+
+    this.quote.freight = Number.parseFloat(value['freight']);
+
+    this.quote.address = this.address;
+    this.quote.order = this.order;
+    this.quote.customer = this.customer;
+    this.quote.items = this.items;
+    this.quote.id = this.quoteId;
+    let totalUnit = 0;
+    let totalValue = 0;
+    this.quote.items.forEach(x => {
+      totalUnit += x.quantity;
+      totalValue += x.totalValue;
+    });
+    this.quote.quantity = totalUnit;
+    this.quote.value = totalValue;
+
+    const url = this._router.serializeUrl(
+      this._router.createUrlTree(['/home/print'])
+    );
+
+    this._quoteService.saveQuote(this.quote);
+
+    window.open(url, "_blank");
   }
 
   addNewItem(item: Item): void {

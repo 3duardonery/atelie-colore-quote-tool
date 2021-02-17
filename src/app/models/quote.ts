@@ -11,4 +11,5 @@ export interface Quote {
     id: string;
     quantity: number;
     value: number;
+    freight: number;
 }

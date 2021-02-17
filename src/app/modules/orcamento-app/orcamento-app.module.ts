@@ -8,12 +8,17 @@ import { QuoteComponent } from './components/quote/quote.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ItemFormComponent } from './components/item-form/item-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PrintComponent } from './components/print/print.component';
 
 const routes: Routes = [
   { 
     path: '', 
     component: HomeComponent,    
-  },  
+  },
+  {
+    path: 'print',
+    component: PrintComponent
+  },
   { path: '**', redirectTo: '' }
 ];
 
@@ -24,7 +29,7 @@ const routes: Routes = [
     HeaderComponent, 
     QuoteComponent, 
     FooterComponent, 
-    ItemFormComponent
+    ItemFormComponent, PrintComponent
   ],
   imports: [
     CommonModule,

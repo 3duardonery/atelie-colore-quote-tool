@@ -1,0 +1,25 @@
+.print {
+  display: block !important;
+}
+
+.head-print {
+  background-color: #fce4d6;
+  -webkit-print-color-adjust: exact;
+}
+
+.roboto-head-title {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+}
+
+.roboto-head-quote {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
+
+hr {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 20px;
+  margin-right: 10px;
+}
