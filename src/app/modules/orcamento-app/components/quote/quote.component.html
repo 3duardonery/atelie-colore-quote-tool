@@ -1,0 +1,125 @@
+<hr>
+<h4 class="mb-2">Dados do Cliente</h4>
+<form [formGroup]="quoteFormGroup" (submit)="printQuote(quoteFormGroup.value)">
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+            <label>Nome do cliente</label>
+            <input type="text" class="form-control" formControlName="customerName" placeholder="Nome do cliente"
+                required>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label>CPF</label>
+            <input type="text" class="form-control" formControlName="cpf" placeholder="CPF do cliente" required>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label>Contato</label>
+            <input type="text" class="form-control" formControlName="phone" placeholder="Telefone" required>
+        </div>
+    </div>
+    <h4 class="mb-2 mt-2">Dados de Entrega</h4>
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+            <label>Endereço</label>
+            <input type="text" class="form-control" formControlName="address" placeholder="Endereço" required>
+        </div>
+        <div class="col-md-2 mb-3">
+            <label>Número</label>
+            <input type="text" class="form-control" formControlName="number" placeholder="Número" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label>Complemento</label>
+            <input type="text" class="form-control" formControlName="complement" placeholder="Complemento" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label>Bairro</label>
+            <input type="text" class="form-control" formControlName="neighborhood" placeholder="Telefone" required>
+        </div>
+
+    </div>
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label>Cidade</label>
+            <input type="text" class="form-control" formControlName="city" placeholder="Telefone" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label>Estado</label>
+            <input type="text" class="form-control" formControlName="state" placeholder="Telefone" required>
+        </div>
+    </div>
+
+    <h4 class="mb-2 mt-2">Dados do Pedido</h4>
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+            <label>Nome (Impresso no mimo)</label>
+            <input type="text" class="form-control" formControlName="printName" placeholder="Nome" required>
+        </div>
+        <div class="col-md-2 mb-3">
+            <label>Data de Solicitação</label>
+            <input type="date" class="form-control" formControlName="requestAt" placeholder="Data de Solicitação"
+                required>
+        </div>
+        <div class="col-md-2 mb-3">
+            <label>Data para Entrega</label>
+            <input type="date" class="form-control" formControlName="deliveryAt" placeholder="Data de Entrega" required>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label>Tema</label>
+            <input type="text" class="form-control" formControlName="theme" placeholder="Tema" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label>Idade (Impresso no mimo)</label>
+            <input type="text" class="form-control" formControlName="printAge" placeholder="Idade" required>
+        </div>
+        <div class="form-group col-md-3">
+            <label>Orçamentista</label>
+            <select class="form-control" formControlName="seller" id="exampleFormControlSelect1">
+                <option>Selecione uma opção</option>
+                <option>Letícia</option>
+                <option>Nayane</option>
+            </select>
+        </div>
+    </div>
+    <div class="row d-flex flex-row justify-content-between p-2">
+        <h4 class="mb-2 mt-2 ml-2">Itens do Orçamento</h4>
+        <button type="button" class="btn btn-outline-primary" (click)="showAddItemForm()">Incluir Item</button>
+    </div>
+    <app-item-form (addItem)="addNewItem($event)" (hide)="hideAddItemForm($event)" [visibled]="addItemFormIsVisibled">
+    </app-item-form>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Preenchimento</th>
+                    <th scope="col">Tamanho</th>
+                    <th scope="col">Tipo do Papel</th>
+                    <th scope="col">Valor Unitário</th>
+                    <th scope="col">Valor Total</th>
+                    <th>Deletar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let itemOfList of items; let i = index">
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{itemOfList.description}}</td>
+                    <td>{{itemOfList.quantity}}</td>
+                    <td>{{itemOfList.state}}</td>
+                    <td>{{itemOfList.height}}</td>
+                    <td>{{itemOfList.paper}}</td>
+                    <td>R$ {{itemOfList.unitValue.toFixed(2).replace('.', ',')}}</td>
+                    <td>R$ {{itemOfList.totalValue.toFixed(2).replace('.', ',')}}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="removeItem(i)">Excluir</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row d-flex flex-row justify-content-center m-2">
+        <button type="submit" class="btn btn-primary m-1">Gerar Orçamento</button>
+    </div>
+</form>
