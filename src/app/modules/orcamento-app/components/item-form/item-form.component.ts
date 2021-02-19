@@ -20,7 +20,7 @@ export class ItemFormComponent implements OnInit {
     state: '', 
     totalValue: 0,
     unitValue: 0,
-    height: ''
+    height: 'Tradicional'
   }
 
   constructor() { }
