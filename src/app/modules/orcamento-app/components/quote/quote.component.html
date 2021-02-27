@@ -44,7 +44,7 @@
             <label>Estado</label>
             <select class="form-control" formControlName="state">
                 <option>Selecione uma opção</option>
-                <option>CE</option>
+                <option *ngFor="let uf of ufs" value="{{uf.sigla}}">{{uf.nome}}</option>
             </select>
         </div>
     </div>

@@ -1,13 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { promise } from 'protractor';
+import { Observable } from 'rxjs';
 import { Address } from 'src/app/models/address';
 import { Customer } from 'src/app/models/customer';
 import { Item } from 'src/app/models/item';
 import { Order } from 'src/app/models/order';
 
 import { Quote } from 'src/app/models/quote';
+import { Uf } from 'src/app/models/uf';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { QuoteService } from '../../services/quote.service';
+import { UfService } from '../../services/uf.service';
+
+const ufKey = 'ufs';
 
 @Component({
   selector: 'app-quote',
@@ -60,11 +67,17 @@ export class QuoteComponent implements OnInit {
   };
   quoteFormGroup: FormGroup;
 
+  ufs: Uf[] = [];
+
+  
+
   @Input() quoteId: string;
 
   constructor(private _formBuilder: FormBuilder, 
     private _router: Router, 
-    private _quoteService: QuoteService) { }
+    private _quoteService: QuoteService,
+    private _ufService: UfService,
+    private _localStorage: LocalStorageService) { }
 
   ngOnInit(): void {    
     this.quoteFormGroup = this._formBuilder
@@ -86,6 +99,28 @@ export class QuoteComponent implements OnInit {
         seller: new FormControl(this.order.owner), 
         freight: new FormControl(this.quote.freight)       
       });
+
+      this.getUfFromFunction();     
+  }
+
+  getUfFromFunction()  {
+    
+    if (this._localStorage.getItem(ufKey) == null) {
+      this._ufService.getUf()
+        .subscribe(
+          (data) => {
+            this.ufs = data;
+            this._localStorage.saveItem(ufKey, this.ufs);
+            console.log(this.ufs);
+                     
+          },
+          (error) => {
+            console.error(error);            
+          }
+        );        
+    } else {
+      this.ufs = this._localStorage.getItem(ufKey);
+    }
   }
 
   showAddItemForm(): void {

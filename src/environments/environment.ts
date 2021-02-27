@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  urlFunctionUf: 'https://functions-atelie-service.azurewebsites.net',
+  headerKey: 'x-functions-key',
+  functionKey: 'jXFZEucJ2skIqVs3ODb5hyzgRvkAGaiKoPqfF/UFcRnepa9PI4WHSg=='
 };
 
 /*
