@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Item } from 'src/app/models/item';
+import { Mimo } from 'src/app/models/mimo';
+import { MimoService } from '../../services/mimo.service';
 
 @Component({
   selector: 'app-item-form',
@@ -23,7 +26,10 @@ export class ItemFormComponent implements OnInit {
     height: 'Tradicional'
   }
 
-  constructor() { }
+  mimos: Mimo[] = [];
+  selectedItem: string = '';
+
+  constructor(private _mimoService: MimoService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
@@ -39,6 +45,30 @@ export class ItemFormComponent implements OnInit {
 
   calculate(): void {
     this.item.totalValue = this.item.unitValue * this.item.quantity;
+  }
+
+  searchMimo(content: any): void {   
+
+    this._mimoService.getMimos(this.item.description)
+      .subscribe(
+        (data) => {
+          this.mimos = data;
+          this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+        },
+        (error) => {
+          console.error(error);          
+        }
+      );
+  }
+
+  setItemDescription(): void {
+    this.modalService.dismissAll();
+  }
+  
+  onItemChange(valueOfDescription: any): void {
+    var selectedDescription = valueOfDescription.target.value;
+    
+    this.item.description = selectedDescription; 
   }
 
 }

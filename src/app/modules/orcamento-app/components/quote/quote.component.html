@@ -89,7 +89,11 @@
     </div>
     <div class="row d-flex flex-row justify-content-between p-2">
         <h4 class="mb-2 mt-2 ml-2">Itens do Orçamento</h4>
-        <button type="button" class="btn btn-outline-primary" (click)="showAddItemForm()">Incluir Item</button>
+        <div class="d-flex flex row justify-content-between">
+            <button type="button" class="btn btn-outline-primary mr-2" data-toggle="modal"
+                data-target="#exampleModalLong">Cadastrar Mimo</button>
+            <button type="button" class="btn btn-primary" (click)="showAddItemForm()">Incluir Item</button>
+        </div>
     </div>
     <app-item-form (addItem)="addNewItem($event)" (hide)="hideAddItemForm($event)" [visibled]="addItemFormIsVisibled">
     </app-item-form>
@@ -129,3 +133,43 @@
         <button type="submit" class="btn btn-primary m-1">Gerar Orçamento</button>
     </div>
 </form>
+
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Cadastrar Novo Mimo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row needs-validation" novalidate>
+                    <div class="d-flex flex-column col-md-12 mb-12">
+                        <label>Descrição</label>
+                        <input type="text" class="form-control" placeholder="Nome do mimo"
+                            [(ngModel)]="mimoDescription">
+
+                        <div class="alert alert-success mt-2 mb-0" *ngIf="isNewMimoSuccess" role="alert">
+                            Mimo cadastrado com sucesso
+                        </div>
+                        <div class="alert alert-danger mt-2 mb-0" *ngIf="isNewMimoError" role="alert">
+                            Erro ao cadastrar o mimo
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button class="btn btn-primary" type="button" (click)="saveNewMimo()">
+                    <div *ngIf="!isSaving; else loadingContent">Salvar</div>
+                    <ng-template #loadingContent>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="sr-only">Salvando...</span>
+                    </ng-template>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

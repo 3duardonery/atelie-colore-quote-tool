@@ -11,6 +11,7 @@ import { Order } from 'src/app/models/order';
 import { Quote } from 'src/app/models/quote';
 import { Uf } from 'src/app/models/uf';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { MimoService } from '../../services/mimo.service';
 import { QuoteService } from '../../services/quote.service';
 import { UfService } from '../../services/uf.service';
 
@@ -69,7 +70,12 @@ export class QuoteComponent implements OnInit {
 
   ufs: Uf[] = [];
 
-  
+  mimoDescription: string = '';
+  isValidDescription: boolean = false;
+  isNewMimoSuccess: boolean = false;
+  isNewMimoError: boolean = false;
+
+  isSaving: boolean = false;
 
   @Input() quoteId: string;
 
@@ -77,7 +83,8 @@ export class QuoteComponent implements OnInit {
     private _router: Router, 
     private _quoteService: QuoteService,
     private _ufService: UfService,
-    private _localStorage: LocalStorageService) { }
+    private _localStorage: LocalStorageService,
+    private _mimoService: MimoService) { }
 
   ngOnInit(): void {    
     this.quoteFormGroup = this._formBuilder
@@ -182,5 +189,24 @@ export class QuoteComponent implements OnInit {
   removeItem(index: number): void {
     this.items.splice(index, 1);
   }
+
+  saveNewMimo(): void {
+    this.isSaving = true;  
+    this._mimoService.saveMimo({ nome: this.mimoDescription })
+      .subscribe(
+        (data) => {
+          this.isNewMimoSuccess = true;
+          this.isSaving = false;       
+        },
+        (error) => {
+          console.error(error);
+          this.isNewMimoError = false;
+          this.isSaving = false;        
+        }
+      );
+
+  }
+
+
 
 }

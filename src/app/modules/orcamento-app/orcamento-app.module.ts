@@ -9,6 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ItemFormComponent } from './components/item-form/item-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrintComponent } from './components/print/print.component';
+import { NgbModalModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   { 
@@ -36,6 +37,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
+    NgbTypeaheadModule,
+    NgbModalModule,
   ],
   exports: [
     HomeComponent
